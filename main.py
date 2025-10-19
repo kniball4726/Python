@@ -21,7 +21,7 @@ time.sleep(1)
 os.system("clear")
 
 def preguntar():
-  print("Seleccione una opción del menú\n")
+  print(f"Usuario: {ingreso}\n\nSeleccione una opción del menú\n")
   for i in menu:
     print(f"{i}\n")
     time.sleep(0.3)
