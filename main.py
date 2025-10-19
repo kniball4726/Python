@@ -26,10 +26,10 @@ def preguntar():
     print(f"{i}\n")
     time.sleep(0.3)
 
-  seleccion = int(input())
-
-  while seleccion > 0 or seleccion < 6:
-    if seleccion == 1:
+  seleccion = input()
+  
+  while seleccion > '0' or seleccion < '6':
+    if seleccion == '1':
       os.system("clear")
       print("Agregar Producto\n\n")
       producto = input("Ingrese el nombre del producto\n\n")
@@ -39,7 +39,7 @@ def preguntar():
       os.system("clear")
       preguntar()
       break
-    elif seleccion == 2:
+    elif seleccion == '2':
       os.system("clear")
       print("Ver Productos\n\n")
       if len(productos) == 0:
@@ -55,7 +55,7 @@ def preguntar():
         time.sleep(4)
         preguntar()
         break
-    elif seleccion == 3:
+    elif seleccion == '3':
       os.system("clear")
       print("Buscar Producto\n\n")
       producto = input("Ingrese el nombre del producto a buscar\n\n")
@@ -71,7 +71,7 @@ def preguntar():
         os.system("clear")
         preguntar()
         break
-    elif seleccion == 4:
+    elif seleccion == '4':
       os.system("clear")
       print("Eliminar Producto\n")
       producto = input("Ingrese el nombre del producto a eliminar\n")
@@ -88,7 +88,7 @@ def preguntar():
         os.system("clear")
         preguntar()
         break
-    elif seleccion == 5:
+    elif seleccion == '5':
       os.system("clear")
       print("Gracias por usar el sistema\nAutor: Gregory Rodriguez\nDNI 95777596")
       time.sleep(3)
