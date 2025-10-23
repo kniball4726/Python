@@ -50,8 +50,8 @@ def preguntar():
         break
       else:
         print("Productos cargados\n")
-        for i in productos:
-          print(f"{i}\n")
+        for idx, i in enumerate(productos, start=1):
+          print(f"{idx}. {i}\n")
         time.sleep(4)
         preguntar()
         break
