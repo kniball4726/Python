@@ -32,13 +32,13 @@ def preguntar():
   while seleccion > '0' or seleccion < '6':
     if seleccion == '1':
       os.system('cls' if os.name == 'nt' else 'clear')
-      print("Agregar Producto\n\n")
-      
-      categoria = input("Ingrese la categoría del producto\n\n")
-      producto = input("Ingrese el nombre del producto\n\n")
-      precio = int(input("Ingrese el precio del producto\n\n"))
-      
-      nuevo_producto = [categoria,producto,precio]
+      print("Agregar Producto\n")
+      print("------------------------\n")      
+      categoria = input("Ingrese la categoría del producto: ")
+      producto = input("Ingrese el nombre del producto: ")
+      precio = int(input("Ingrese el precio del producto: "))
+
+      nuevo_producto = {"Categoria": categoria,"Producto": producto,"Precio":precio}
       productos.append(nuevo_producto)
       print(f"Datos agregados con exito\n")
       time.sleep(1)
@@ -56,8 +56,11 @@ def preguntar():
         break
       else:
         print("Productos cargados\n")
-        for idx, i in enumerate(productos, start=1):
-          print(f"{idx}. {i}\n")
+        print("------------------------\n")
+        for i in productos:
+          for clave, valor in i.items():
+            print(f"{clave}: {valor}\n")
+          print("------------------------\n")
         time.sleep(4)
         preguntar()
         break
