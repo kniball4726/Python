@@ -33,9 +33,14 @@ def preguntar():
     if seleccion == '1':
       os.system('cls' if os.name == 'nt' else 'clear')
       print("Agregar Producto\n\n")
+      
+      categoria = input("Ingrese la categoría del producto\n\n")
       producto = input("Ingrese el nombre del producto\n\n")
-      productos.append(producto)
-      print(f"El producto {producto} ha sido agregado\n")
+      precio = int(input("Ingrese el precio del producto\n\n"))
+      
+      nuevo_producto = [categoria,producto,precio]
+      productos.append(nuevo_producto)
+      print(f"Datos agregados con exito\n")
       time.sleep(1)
       os.system('cls' if os.name == 'nt' else 'clear')
       preguntar()
