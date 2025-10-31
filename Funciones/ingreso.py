@@ -4,28 +4,31 @@ import sys
 from colorama import init, Fore, Back 
 
 
-init()
-menu = ['Agregar Productos','Ver Productos','Buscar Productos','Eliminar Productos','Salir']
-productos = []
+def ingreso():
+ 
+  init()
+  while True:
+    os.system('cls' if os.name == 'nt' else 'clear')
+    ingreso = input(Fore.GREEN+"Bienvenid@ a SISCAPROD 'Sistema de carga de productos'\n\nIndique usuario\n\n")
+    if len(ingreso)>0:
+      break
+    else:
+      os.system('cls' if os.name == 'nt' else 'clear')
+      print("Debe ingresar un usuario valido\n")
+      time.sleep(2)
+      os.system('cls' if os.name == 'nt' else 'clear')
 
-while True:
   os.system('cls' if os.name == 'nt' else 'clear')
-  ingreso = input("Bienvenid@ a SISCAPROD 'Sistema de carga de productos'\n\nIndique usuario\n\n")
-  if len(ingreso)>0:
-    break
-  else:
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print("Debe ingresar un usuario valido\n")
-    time.sleep(2)
-    os.system('cls' if os.name == 'nt' else 'clear')
 
-os.system('cls' if os.name == 'nt' else 'clear')
-
-print(f'Bienvenid@ {ingreso}\n\n')
-time.sleep(1)
-os.system('cls' if os.name == 'nt' else 'clear')
+  print(f'Bienvenid@ {ingreso}\n\n')
+  time.sleep(1)
+  os.system('cls' if os.name == 'nt' else 'clear')
 
 def preguntar():
+  init()
+  menu = ['Agregar Productos','Ver Productos','Buscar Productos','Eliminar Productos','Salir']
+  productos = []
+
   print(f"Usuario: {ingreso}\n\nSeleccione una opción del menú\n")
   for idx, i in enumerate(menu, start=1):
     print(Fore.YELLOW+f"{idx}.- {i}\n")
