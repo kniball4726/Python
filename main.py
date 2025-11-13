@@ -1,4 +1,5 @@
-from Funciones.ingreso import *
+from Logic.ingreso import *
+
 
 
 ingreso()

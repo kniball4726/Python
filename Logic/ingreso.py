@@ -3,14 +3,9 @@ import time
 import sys
 from colorama import init, Fore, Back 
 
-
-
-
 def ingreso():
-  """
-    Esta funcion indica el ingreso al sistema mediante un usuario
-    Al introducir usuario se ingresara al sistema, si no se incluye dara un error
-  """
+  """Esta funcion indica el ingreso al sistema mediante un usuario
+    Al introducir usuario se ingresara al sistema, si no se incluye dara un error"""
   init()
   while True:
     os.system('cls' if os.name == 'nt' else 'clear')
