@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from Logic.logica import ingreso
 
 conectar = None
 
@@ -68,7 +69,7 @@ def datos_iniciales():
         conectar = sqlite3.connect("DB/productosapp.db")
         cursor = conectar.cursor()        
         sql = ("INSERT INTO usuarios (id, nombre, usuario, email, password, rol, estado) VALUES (?,?, ?, ?, ?, ?, ?)")
-        valores = [(1, 'Administrador', 'Admin', 'admin@gmail.com', 'admin123', 'admin', 1)]
+        valores = [(1, 'ADMINISTRADOR', 'ADMIN', 'admin@gmail.com', 'admin123', 'admin', 1)]
         cursor.executemany(sql, valores)
         conectar.commit()
         
@@ -101,9 +102,9 @@ def datos_menu():
         conectar.close()
 
 
-def persistencia():
+def aplicacion():
     conexion()
     crear_tablas()
     datos_iniciales()
     datos_menu()
-    
+    ingreso()

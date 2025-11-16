@@ -1,4 +1,4 @@
-import time, sqlite3
+import os, time, sqlite3
 from Logic.persistencia import *
 
 def ingreso_usuario(usuario, password):
@@ -33,6 +33,7 @@ def ver_usuarios():
     finally:
         conectar.close()
        
+
        
 def crear_usuario(nombre, usuario, email, password, rol):
     try:
@@ -47,6 +48,43 @@ def crear_usuario(nombre, usuario, email, password, rol):
         print(f"Error al crear el usuario: {e}")
     finally:
         conectar.close()
+
+def modificar_usuario(id, nombre, usuario, email, password, rol):
+    try:
+        conectar = sqlite3.connect("DB/productosapp.db")
+        cursor = conectar.cursor()
+        sql = ("UPDATE usuarios SET nombre=?, usuario=?, email=?, password=?, rol=? WHERE id=? AND estado=1")
+        valores = (nombre, usuario, email, password, rol, id)
+        cursor.execute(sql, valores)
+        conectar.commit()
+        if cursor.rowcount > 0:
+            print("Usuario modificado con exito")
+        else:
+            print("No se encontró el usuario con ese índice.")
+    except Exception as e:
+        print(f"Error al modificar el usuario: {e}")
+    finally:
+        conectar.close()
+
+
+def eliminar_usuario(indice):
+    try:
+        conectar = sqlite3.connect("DB/productosapp.db")
+        cursor = conectar.cursor()
+        sql = ("UPDATE usuarios SET estado=0 WHERE id=?")
+        valor = (indice,)
+        cursor.execute(sql, valor)
+        conectar.commit()
+        if cursor.rowcount > 0:
+            print("Usuario eliminado con exito")
+        else:
+            print("No se encontró el usuario con ese índice.")
+    except Exception as e:
+        print(f"Error al eliminar el usuario: {e}")
+    finally:
+        conectar.close()
+        
+
 
 def agregar_producto(nombre, precio, categoria, descripcion):
     try:
@@ -129,36 +167,4 @@ def eliminar_producto(indice):
     finally:
         conectar.close()
 
-def ver_menu():
-    try:
-        conectar = sqlite3.connect("DB/productosapp.db")
-        cursor = conectar.cursor()
-        cursor.execute("SELECT * FROM menu WHERE estado=1")
-        menus = cursor.fetchall()
-        print("Menu principal:\n")
-        for menu in menus:
-            time.sleep(0.4)
-            print(f"{menu[0]}.- {menu[1]}")
-        submenu()
-    except Exception as e:
-        print(f"Error al obtener el menu: {e}")
-    finally:
-        conectar.close()
-        
-def submenu():
-    seleccion = input("\nSeleccione una opción del menú principal: ")
-    if seleccion == '1':
-        os.system('cls' if os.name == 'nt' else 'clear')
-        print("Agregar nuevo producto:\n")
-        nombre = input("Ingrese el nombre del producto: ")
-        precio = float(input("Ingrese el precio del producto: "))
-        categoria = input("Ingrese la categoría del producto: ")
-        descripcion = input("Ingrese la descripción del producto: ")
-        agregar_producto(nombre, precio, categoria, descripcion)
-        time.sleep(2)
-        os.system('cls' if os.name == 'nt' else 'clear')
-        ver_menu()
-    elif seleccion == '2':
-        ver_productos()
-        ver_menu()  
     
