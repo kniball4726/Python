@@ -1,5 +1,6 @@
 import os, time, sqlite3
 from Logic.persistencia import *
+from colorama import init, Fore, Back, Style
 
 def ingreso_usuario(usuario, password):
     try:
@@ -10,11 +11,9 @@ def ingreso_usuario(usuario, password):
         cursor.execute(sql, valor)
         resultado = cursor.fetchone()
         if resultado:
-            print("Ingreso exitoso")
-            return True
+            return "Ingreso exitoso"
         else:
-            print("Usuario o contraseña incorrectos")
-            return False
+            return False 
     except Exception as e:
         print(f"Error al ingresar el usuario: {e}")
         return False
