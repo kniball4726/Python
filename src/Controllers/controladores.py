@@ -5,7 +5,7 @@ from colorama import init, Fore, Back, Style
 init()
 def ingreso_usuario(usuario, password):
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")        
+        conectar = sqlite3.connect("src/DB/productosapp.db")        
         cursor = conectar.cursor()
         sql = ("SELECT * FROM usuarios WHERE usuario=? AND password=? AND estado=1")
         valor = (usuario, password)
@@ -21,7 +21,7 @@ def ingreso_usuario(usuario, password):
 
 def ver_usuarios():
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()
         cursor.execute("SELECT * FROM usuarios WHERE estado=1")
         usuarios = cursor.fetchall()
@@ -37,7 +37,7 @@ def ver_usuarios():
        
 def crear_usuario(nombre, usuario, email, password, rol):
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()
         sql = ("INSERT INTO usuarios (nombre, usuario, email, password, rol) VALUES (?, ?, ?, ?, ?)")
         valores = (nombre, usuario, email, password, rol)
@@ -51,7 +51,7 @@ def crear_usuario(nombre, usuario, email, password, rol):
 
 def modificar_usuario(id, nombre, usuario, email, password, rol):
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()
         sql = ("UPDATE usuarios SET nombre=?, usuario=?, email=?, password=?, rol=? WHERE id=? AND estado=1")
         valores = (nombre, usuario, email, password, rol, id)
@@ -69,7 +69,7 @@ def modificar_usuario(id, nombre, usuario, email, password, rol):
 
 def eliminar_usuario(indice):
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()
         sql = ("UPDATE usuarios SET estado=0 WHERE id=?")
         valor = (indice,)
@@ -88,7 +88,7 @@ def eliminar_usuario(indice):
 
 def agregar_producto(nombre, precio, categoria, descripcion):
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()
         sql = ("INSERT INTO productos (nombre, precio, categoria, descripcion) VALUES (?, ?, ?, ?)")
         valores = (nombre, precio, categoria, descripcion)
@@ -102,7 +102,7 @@ def agregar_producto(nombre, precio, categoria, descripcion):
 
 def ver_productos():
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()
         cursor.execute("SELECT * FROM productos WHERE estado=1")
         productos = cursor.fetchall()
@@ -115,7 +115,7 @@ def ver_productos():
  
 def buscar_producto(nombre):
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()
         sql = ("SELECT * FROM productos WHERE nombre LIKE ? AND estado=1")
         valor = (f"%{nombre}%",)
@@ -134,7 +134,7 @@ def buscar_producto(nombre):
 
 def modificar_producto(id, nombre, precio, categoria, descripcion):
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()
         sql = ("UPDATE productos SET nombre=?, precio=?, categoria=?, descripcion=? WHERE id=? AND estado=1")
         valores = (nombre, precio, categoria, descripcion, id)
@@ -151,7 +151,7 @@ def modificar_producto(id, nombre, precio, categoria, descripcion):
         
 def eliminar_producto(indice):
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()
         sql = ("UPDATE productos SET estado=0 WHERE id=?")
         valor = (indice,)

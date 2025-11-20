@@ -6,10 +6,10 @@ conectar = None
 
 def conexion():
     try:
-        if not os.path.exists("DB"):
-            os.makedirs("DB")
+        if not os.path.exists("src/DB"):
+            os.makedirs("src/DB")
             
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         print("Conexion establecida")
         
     except Exception as e:
@@ -19,7 +19,7 @@ def conexion():
 
 def crear_tablas():
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()        
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS usuarios(
@@ -66,7 +66,7 @@ def crear_tablas():
         
 def datos_iniciales():
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()        
         sql = ("INSERT INTO usuarios (id, nombre, usuario, email, password, rol, estado) VALUES (?,?, ?, ?, ?, ?, ?)")
         valores = [(1, 'ADMINISTRADOR', 'ADMIN', 'admin@gmail.com', 'admin123', 'admin', 1)]
@@ -81,7 +81,7 @@ def datos_iniciales():
 
 def datos_menu():
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/DB/productosapp.db")
         cursor = conectar.cursor()
         sql = ("INSERT INTO menu (id, nombre, descripcion, estado) VALUES (?,?, ?, ?)")
         valores = [(1, 'Ingresar Producto', 'Menu principal de la aplicacion', 1),
