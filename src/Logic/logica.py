@@ -25,9 +25,7 @@ def ingreso():
       ingreso()
   except Exception as e:
     print(Fore.RED + f"Error durante el ingreso: {e}"+Fore.RESET)
-  finally:
-    init(autoreset=True)
-      
+
   
 def ver_menu():
     try:
@@ -197,7 +195,5 @@ def submenu():
         print(Fore.RED + f"Error al procesar la selección del menú: {e}"+Fore.RESET)
         time.sleep(2)
         os.system('cls' if os.name == 'nt' else 'clear')
-        ver_menu()
-    finally:
-        init(autoreset=True)      
+        ver_menu()  
       
