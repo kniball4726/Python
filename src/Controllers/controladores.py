@@ -1,5 +1,5 @@
 import os, time, sqlite3
-from Logic.persistencia import *
+from src.Persistencia.persistencia import *
 from colorama import init, Fore, Back, Style
 
 init()

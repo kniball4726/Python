@@ -1,7 +1,7 @@
 import os, time
 from colorama import init, Fore, Back 
-from Logic.controladores import *
-from Logic.persistencia import *
+from src.Controllers.controladores import *
+from src.Persistencia.persistencia import *
 
 init()
 def ingreso():

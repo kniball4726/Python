@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from Logic.logica import ingreso
+from src.Logic.logica import ingreso
 
 conectar = None
 
