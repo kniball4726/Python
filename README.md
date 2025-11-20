@@ -14,6 +14,26 @@ DNI: 95777596
 
 Proyecto: Sistema de gestión de productos
 
+**Pasos iniciales**
+
+    Se recomienda iniciar un entorno virtual, se puede hacer de la siguiente manera:
+
+        en la terminal desplegada se corre la siguiente linea de codigo `pip install virtualenv`
+
+        al instalar usamos `virtualenv .env`
+
+        se crea el ambiente virtual, para activarlo se utiliza `cd .env\Scrips\activate`
+
+        en la linea de comando inicialmente deberia salir (.env)
+
+        para instalar las dependencias utilizadasa en el proyecto se usa el siguiente comando:
+        `pip install -r requirements.txt`
+        en la raiz del proyecto se debera crear una carpeta llamada .env esta ultima contendra las variables de entorno utilizadas en el proyecto
+    
+    la carpeta .gitignore contiene los archivos que no se suben al repositorio ya que no son necesarios o contienen  informacion sensible.
+
+    generalmente se ignoran archivos como .venv que es el entorno virtual .env repositorio de variables de entorno y src/DB bases de datos, tablas y datos iniciales, los cuales se crean de manera automatica al iniciar la aaplicacion.
+    
 **Iniciar aplicación**
 
         El usuario debe ubicar el archivo **app.py** el cual representa la funcion principal, index o main dentro de la aplicación, dentro de este archivo solo se encontraran
