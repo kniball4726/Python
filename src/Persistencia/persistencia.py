@@ -6,20 +6,19 @@ conectar = None
 
 def conexion():
     try:
-        if not os.path.exists("DB"):
-            os.makedirs("DB")
+        if not os.path.exists("src/db"):
+            os.makedirs("src/db")
             
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/db/productos.db")
         print("Conexion establecida")
         
-    except Exception as e:
+    except sqlite3.Error as e:
         print(f"no se ha establecido la conexion, error {e}")
-    finally:
-        conectar.close()
+    return conectar
 
 def crear_tablas():
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/db/productos.db")
         cursor = conectar.cursor()        
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS usuarios(
@@ -59,14 +58,14 @@ def crear_tablas():
                 """ )
             
         print("Base de datos y tablas creadas con exito")
-    except Exception as e:
+    except sqlite3.Error as e:
         print(f"Error al crear las tablas: {e}")
     finally:
         conectar.close() 
         
 def datos_iniciales():
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/db/productos.db")
         cursor = conectar.cursor()       
 
         sql = ("INSERT INTO usuarios (id, nombre, usuario, email, password, rol, estado) VALUES (?,?, ?, ?, ?, ?, ?)")
@@ -76,14 +75,14 @@ def datos_iniciales():
         conectar.commit()
         
         print("Datos iniciales insertados con exito")
-    except Exception as e:
+    except sqlite3.Error as e:
         print(f"Error al insertar los datos iniciales: {e}")
     finally:
         conectar.close()
 
 def datos_menu():
     try:
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/db/productos.db")
         cursor = conectar.cursor()
         sql = ("INSERT INTO menu (id, nombre, descripcion, estado) VALUES (?,?, ?, ?)")
         valores = [(1, 'Ingresar Producto', 'Menu principal de la aplicacion', 1),
@@ -98,7 +97,7 @@ def datos_menu():
         conectar.commit()
         
         print("Datos iniciales insertados con exito")
-    except Exception as e:
+    except sqlite3.Error as e:
         print(f"Error al insertar los datos iniciales: {e}")
     finally:
         conectar.close()

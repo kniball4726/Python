@@ -29,8 +29,7 @@ def ingreso():
   
 def ver_menu():
     try:
-        init()
-        conectar = sqlite3.connect("DB/productosapp.db")
+        conectar = sqlite3.connect("src/db/productos.db")
         cursor = conectar.cursor()
         cursor.execute("SELECT * FROM menu WHERE estado=1")
         menus = cursor.fetchall()
@@ -39,7 +38,7 @@ def ver_menu():
             time.sleep(0.4)
             print(f"{menu[0]}.- {menu[1]}")
         submenu()
-    except Exception as e:
+    except sqlite3.Error as e:
         print(Fore.RED+f"Error al obtener el menu: {e}"+Fore.RESET)
     finally:
         conectar.close()
