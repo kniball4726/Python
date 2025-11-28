@@ -1,24 +1,16 @@
-import sqlite3
-import os
-from src.Logic.logica import ingreso
+import sqlite3, os, dotenv
+from colorama import init, Fore, Back, Style
+from ..Persistencia.conectar import conexion
 
-conectar = None
+dotenv.load_dotenv()
 
-def conexion():
-    try:
-        if not os.path.exists("src/db"):
-            os.makedirs("src/db")
-            
-        conectar = sqlite3.connect("src/db/productos.db")
-        print("Conexion establecida")
-        
-    except sqlite3.Error as e:
-        print(f"no se ha establecido la conexion, error {e}")
-    return conectar
+DATABASE_NAME = os.getenv("DATABASE_NAME")
 
-def crear_tablas():
-    try:
-        conectar = sqlite3.connect("src/db/productos.db")
+conectar = conexion(DATABASE_NAME)
+
+init()
+
+try:
         cursor = conectar.cursor()        
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS usuarios(
@@ -56,16 +48,23 @@ def crear_tablas():
                 )
             
                 """ )
-            
-        print("Base de datos y tablas creadas con exito")
-    except sqlite3.Error as e:
-        print(f"Error al crear las tablas: {e}")
-    finally:
-        conectar.close() 
         
-def datos_iniciales():
-    try:
-        conectar = sqlite3.connect("src/db/productos.db")
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS submenu(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre TEXT NOT NULL,
+                descripcion TEXT,
+                estado INTEGER NOT NULL DEFAULT 1
+                )
+            
+                """ )
+            
+        print(Fore.YELLOW+"Base de datos y tablas creadas con exito"+Fore.RESET)
+except sqlite3.Error as e:
+        print(Fore.RED+f"Error al crear las tablas: {e}"+Fore.RESET)
+
+        
+try:
         cursor = conectar.cursor()       
 
         sql = ("INSERT INTO usuarios (id, nombre, usuario, email, password, rol, estado) VALUES (?,?, ?, ?, ?, ?, ?)")
@@ -74,15 +73,12 @@ def datos_iniciales():
         cursor.executemany(sql, valores)
         conectar.commit()
         
-        print("Datos iniciales insertados con exito")
-    except sqlite3.Error as e:
+        print(Fore.YELLOW+"Datos iniciales insertados con exito"+Fore.RESET)
+except sqlite3.Error as e:
         print(f"Error al insertar los datos iniciales: {e}")
-    finally:
-        conectar.close()
 
-def datos_menu():
-    try:
-        conectar = sqlite3.connect("src/db/productos.db")
+
+try:
         cursor = conectar.cursor()
         sql = ("INSERT INTO menu (id, nombre, descripcion, estado) VALUES (?,?, ?, ?)")
         valores = [(1, 'Ingresar Producto', 'Menu principal de la aplicacion', 1),
@@ -96,16 +92,26 @@ def datos_menu():
         cursor.executemany(sql, valores)
         conectar.commit()
         
-        print("Datos iniciales insertados con exito")
-    except sqlite3.Error as e:
+        print(Fore.YELLOW+"Datos iniciales insertados con exito"+Fore.RESET)
+except sqlite3.Error as e:
         print(f"Error al insertar los datos iniciales: {e}")
-    finally:
-        conectar.close()
+
+try:
+        cursor = conectar.cursor()
+        sql = ("INSERT INTO submenu (id, nombre, descripcion, estado) VALUES (?,?, ?, ?)")
+        valores = [(1, 'Ver usuarios', 'Ver los usuarios agregados', 1),
+                   (2, 'Agregar usuario', 'Agregar usuario', 1),
+                   (3, 'Modificar usuario', 'Menu de modificación de productos', 1),
+                   (4, 'Eliminar usuario', 'Menu de eliminacion de productos', 1),
+                   (5, 'Volver', 'Salir de la aplicacion', 1)
+                   ]
+        cursor.executemany(sql, valores)
+        conectar.commit()
+        
+        print(Fore.YELLOW+"Datos iniciales insertados con exito"+Fore.RESET)
+except sqlite3.Error as e:
+        print(f"Error al insertar los datos iniciales: {e}")
 
 
 def aplicacion():
-    conexion()
-    crear_tablas()
-    datos_iniciales()
-    datos_menu()
-    ingreso()
+    conexion(DATABASE_NAME)

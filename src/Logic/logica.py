@@ -1,35 +1,39 @@
 import os, time
-from colorama import init, Fore, Back 
-from src.Controllers.controladores import *
-from src.Persistencia.persistencia import *
+from colorama import init, Fore, Back , Style
+from ..Persistencia.conectar import conexion
+from ..Controllers.controladores import *
+import dotenv
+dotenv.load_dotenv()
+
+DATABASE_NAME = os.getenv("DATABASE_NAME")
+
+conectar = conexion(DATABASE_NAME)
 
 init()
-def ingreso():
+def ingreso(conectar=conexion(DATABASE_NAME)):
   try:
-    init()
     os.system('cls' if os.name == 'nt' else 'clear')
     print(Fore.YELLOW + Style.BRIGHT+ "Bienvenido al sistema de gestión de productos\n" + Style.RESET_ALL + Fore.RESET)
     usuario = input("Ingrese su usuario: ").strip().upper()
     password = input("Ingrese su contraseña: ").strip()
     
-    if ingreso_usuario(usuario, password):
+    if ingreso_usuario(conectar, usuario, password):
       print(Fore.YELLOW + "Ingreso exitoso\n"+Fore.RESET)
       print(Fore.YELLOW+"Cargando el sistema..."+Fore.RESET)
       time.sleep(1)
       os.system('cls' if os.name == 'nt' else 'clear')
-      ver_menu()
+      ver_menu(conectar)
     else:
       print(Fore.RED + "Usuario o contraseña incorrectos\n"+Fore.RESET)
       time.sleep(2)
       os.system('cls' if os.name == 'nt' else 'clear')
-      ingreso()
-  except Exception as e:
+      ingreso(conectar)
+  except sqlite3.Error as e:
     print(Fore.RED + f"Error durante el ingreso: {e}"+Fore.RESET)
 
   
-def ver_menu():
+def ver_menu(conectar=conexion(DATABASE_NAME)):
     try:
-        conectar = sqlite3.connect("src/db/productos.db")
         cursor = conectar.cursor()
         cursor.execute("SELECT * FROM menu WHERE estado=1")
         menus = cursor.fetchall()
@@ -37,16 +41,14 @@ def ver_menu():
         for menu in menus:
             time.sleep(0.4)
             print(f"{menu[0]}.- {menu[1]}")
-        submenu()
+        submenu(conectar)
     except sqlite3.Error as e:
         print(Fore.RED+f"Error al obtener el menu: {e}"+Fore.RESET)
-    finally:
-        conectar.close()
+
         
-def submenu():
+def submenu(conectar=conexion(DATABASE_NAME)):
     seleccion = input(Fore.YELLOW+Style.BRIGHT+"\nSeleccione una opción del menú principal: "+ Fore.RESET+Style.RESET_ALL)
     try:
-        init()
         if seleccion == '1':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(Fore.YELLOW+"Agregar nuevo producto:\n"+Fore.RESET)
@@ -54,32 +56,40 @@ def submenu():
             precio = float(input("Ingrese el precio del producto: "))
             categoria = input("Ingrese la categoría del producto: ").strip().upper()
             descripcion = input("Ingrese la descripción del producto: ").strip()
-            if nombre == "" or precio <= 0 or categoria == "":
+            if len(nombre) <= 0 or precio <= 0 or len(categoria) <= 0:
                 print(Fore.RED + "\nError: Todos los campos son obligatorios y el precio debe ser mayor a cero."+Fore.RESET)
                 time.sleep(2)
                 os.system('cls' if os.name == 'nt' else 'clear')
-                ver_menu()
+                ver_menu(conectar)
             else:
-                agregar_producto(nombre, precio, categoria, descripcion)
+                agregar_producto(conectar, nombre, precio, categoria, descripcion)
                 time.sleep(2)
                 os.system('cls' if os.name == 'nt' else 'clear')
-                ver_menu()
+                ver_menu(conectar)
                 
         elif seleccion == '2':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(Fore.YELLOW+"Ver productos:\n"+Fore.RESET)
-            ver_productos()
+            ver_productos(conectar)
             input(Fore.YELLOW+"\nPresione Enter para volver al menú principal..."+Fore.RESET)
             os.system('cls' if os.name == 'nt' else 'clear')
-            ver_menu()
+            ver_menu(conectar)
         elif seleccion == '3':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(Fore.YELLOW+"Buscar producto:\n"+Fore.RESET)
             termino_busqueda = input("Ingrese el nombre del producto a buscar: ")
-            buscar_producto(termino_busqueda)
-            input(Fore.YELLOW+"\nPresione Enter para volver al menú principal..."+Fore.RESET)
-            os.system('cls' if os.name == 'nt' else 'clear')
-            ver_menu()
+           
+            if termino_busqueda.strip() == "":
+                print(Fore.RED + "\nError: El término de búsqueda no puede estar vacío."+Fore.RESET)
+                time.sleep(2)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ver_menu(conectar)
+            else:
+                buscar_producto(termino_busqueda)
+                input(Fore.YELLOW+"\nPresione Enter para volver al menú principal..."+Fore.RESET)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ver_menu(conectar)
+        
         elif seleccion == '4':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(Fore.YELLOW+"Modificar producto:\n"+Fore.RESET)
@@ -89,42 +99,51 @@ def submenu():
             nueva_categoria = input("Ingrese la nueva categoría del producto: ").strip().upper()
             nueva_descripcion = input("Ingrese la nueva descripción del producto: ").strip()
             
-            if nuevo_nombre == "" or nuevo_precio <= 0 or nueva_categoria == "":
+            if len(nuevo_nombre)<=0 or nuevo_precio <= 0 or len(nueva_categoria)<= 0:
                 print(Fore.RED + "Error: Todos los campos son obligatorios y el precio debe ser mayor a cero."+Fore.RESET)
                 time.sleep(2)
                 os.system('cls' if os.name == 'nt' else 'clear')
-                ver_menu()
+                ver_menu(conectar)
             else:                
-                modificar_producto(id_producto, nuevo_nombre, nuevo_precio, nueva_categoria, nueva_descripcion)
+                modificar_producto(conectar, id_producto, nuevo_nombre, nuevo_precio, nueva_categoria, nueva_descripcion)
                 time.sleep(2)
                 os.system('cls' if os.name == 'nt' else 'clear')
-                ver_menu()
+                ver_menu(conectar)
         elif seleccion == '5':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(Fore.YELLOW+"Eliminar producto:\n"+Fore.RESET)
             id_producto = int(input("Ingrese el ID del producto a eliminar: ")).strip()
-            if not id_producto or id_producto <= 0 or id_producto == "" or id_producto is None:
+            if not id_producto or id_producto is None:
                 print(Fore.RED + "Error: El ID del producto es obligatorio." + Fore.RESET)
                 time.sleep(2)
                 os.system('cls' if os.name == 'nt' else 'clear')
-                ver_menu()
+                ver_menu(conectar)
             else:
-                eliminar_producto(id_producto)
+                eliminar_producto(conectar, id_producto)
                 time.sleep(2)
                 os.system('cls' if os.name == 'nt' else 'clear')
-                ver_menu()
+                ver_menu(conectar)
         elif seleccion == '6':
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print(Fore.YELLOW+"Gestión de usuarios:\n"+Fore.RESET)
-            menu_usuarios = ["1.- Ver usuarios", "2.- Agregar usuario", "3.- Modificar usuario", "4.- Eliminar usuario"]
-            for item in menu_usuarios:
-                print(item)
-                time.sleep(0.4)
-            opcion_usuario = input(Fore.YELLOW+Style.BRIGHT+"\nSeleccione una opción del menú de usuarios: "+Fore.RESET+Style.RESET_ALL)
+            try:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                cursor = conectar.cursor()
+                cursor.execute("SELECT * FROM submenu WHERE estado=1")
+                submenu = cursor.fetchall()
+                print(Fore.YELLOW+Style.BRIGHT+"Menu de usuarios:\n"+Fore.RESET+Style.RESET_ALL)
+                for submenus in submenu:
+                    time.sleep(0.4)
+                    print(f"{submenus[0]}.- {submenus[1]}")
+                    submenu_usuarios(conectar)
+                opcion_usuario = input(Fore.YELLOW+Style.BRIGHT+"\nSeleccione una opción del menú de usuarios: "+Fore.RESET+Style.RESET_ALL)
+                
+            except sqlite3.Error as e:
+                    print(Fore.RED+f"Error al obtener el menu: {e}"+Fore.RESET)
+
             
+# Función para manejar el submenú de usuarios Hacerla modular
             os.system('cls' if os.name == 'nt' else 'clear')
             if opcion_usuario == '1':
-                ver_usuarios()
+                ver_usuarios(conectar)
                 input(Fore.YELLOW+"\nPresione Enter para volver al menú principal..."+Fore.RESET)
             elif opcion_usuario == '2':
                 print(Fore.YELLOW+"Agregar nuevo usuario:\n"+Fore.RESET)
@@ -138,9 +157,9 @@ def submenu():
                     print(Fore.RED + "Error: Todos los campos son obligatorios."+Fore.RESET)
                     time.sleep(2)
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    ver_menu()
+                    ver_menu(conectar)
                 else:
-                    crear_usuario(nombre, usuario, email, password, rol)
+                    crear_usuario(conectar, nombre, usuario, email, password, rol)
                     time.sleep(2)
             
             elif opcion_usuario == '3':
@@ -156,9 +175,9 @@ def submenu():
                     print(Fore.RED + "Error: Todos los campos son obligatorios."+Fore.RESET)
                     time.sleep(2)
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    ver_menu()
+                    ver_menu(conectar)
                 else:
-                    modificar_usuario(id_usuario, nuevo_nombre, nuevo_usuario, nuevo_email, nuevo_password, nuevo_rol)
+                    modificar_usuario(conectar, id_usuario, nuevo_nombre, nuevo_usuario, nuevo_email, nuevo_password, nuevo_rol)
                     time.sleep(2)
             
             elif opcion_usuario == '4':
@@ -168,15 +187,15 @@ def submenu():
                     print(Fore.RED + "Error: El ID del usuario es obligatorio." + Fore.RESET)
                     time.sleep(2)
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    ver_menu()
+                    ver_menu(conectar)
                 else:
-                    eliminar_usuario(id_usuario)
+                    eliminar_usuario(conectar, id_usuario)
                     time.sleep(2)
             else:
                 print(Fore.RED+"\nOpción no válida. Volviendo al menú principal..."+Fore.RESET)
                 time.sleep(2)
             os.system('cls' if os.name == 'nt' else 'clear')
-            ver_menu()
+            ver_menu(conectar)
             
         elif seleccion == '7':
             print(Fore.YELLOW + "Saliendo del sistema..."+Fore.RESET)
@@ -189,10 +208,10 @@ def submenu():
             print(Fore.RED+"Opción no válida. Intente de nuevo."+Fore.RESET)
             time.sleep(2)
             os.system('cls' if os.name == 'nt' else 'clear')
-            ver_menu()
-    except Exception as e:
+            ver_menu(conectar)
+    except sqlite3.Error as e:
         print(Fore.RED + f"Error al procesar la selección del menú: {e}"+Fore.RESET)
         time.sleep(2)
         os.system('cls' if os.name == 'nt' else 'clear')
-        ver_menu()  
+        ver_menu(conectar)  
       
