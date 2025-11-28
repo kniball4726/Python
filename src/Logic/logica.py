@@ -1,8 +1,8 @@
-import os, time
+import os, time, dotenv, sqlite3
 from colorama import init, Fore, Back , Style
 from ..Persistencia.conectar import conexion
 from ..Controllers.controladores import *
-import dotenv
+
 dotenv.load_dotenv()
 
 DATABASE_NAME = os.getenv("DATABASE_NAME")
