@@ -1,3 +1,6 @@
 src/db
 .env
 .venv
+build
+dist
+app.spec
