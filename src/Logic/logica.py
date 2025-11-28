@@ -133,70 +133,9 @@ def submenu(conectar=conexion(DATABASE_NAME)):
                 for submenus in submenu:
                     time.sleep(0.4)
                     print(f"{submenus[0]}.- {submenus[1]}")
-                    submenu_usuarios(conectar)
-                opcion_usuario = input(Fore.YELLOW+Style.BRIGHT+"\nSeleccione una opción del menú de usuarios: "+Fore.RESET+Style.RESET_ALL)
-                
+                submenu_usuarios(conectar)
             except sqlite3.Error as e:
                     print(Fore.RED+f"Error al obtener el menu: {e}"+Fore.RESET)
-
-            
-# Función para manejar el submenú de usuarios Hacerla modular
-            os.system('cls' if os.name == 'nt' else 'clear')
-            if opcion_usuario == '1':
-                ver_usuarios(conectar)
-                input(Fore.YELLOW+"\nPresione Enter para volver al menú principal..."+Fore.RESET)
-            elif opcion_usuario == '2':
-                print(Fore.YELLOW+"Agregar nuevo usuario:\n"+Fore.RESET)
-                nombre = input("Ingrese el nombre completo: ").strip().upper()
-                usuario = input("Ingrese el nombre de usuario: ").strip().upper()
-                email = input("Ingrese el email: ").strip().lower()
-                password = input("Ingrese la contraseña: ").strip()
-                rol = input("Ingrese el rol (admin/user): ").strip().lower()
-                
-                if nombre == "" or usuario == "" or email == "" or password == "" or rol == "":
-                    print(Fore.RED + "Error: Todos los campos son obligatorios."+Fore.RESET)
-                    time.sleep(2)
-                    os.system('cls' if os.name == 'nt' else 'clear')
-                    ver_menu(conectar)
-                else:
-                    crear_usuario(conectar, nombre, usuario, email, password, rol)
-                    time.sleep(2)
-            
-            elif opcion_usuario == '3':
-                print(Fore.YELLOW+"Modificar usuario:\n"+Fore.RESET)
-                id_usuario = int(input("Ingrese el ID del usuario a modificar: ")).strip()
-                nuevo_nombre = input("Ingrese el nuevo nombre completo: ").strip().upper()
-                nuevo_usuario = input("Ingrese el nuevo nombre de usuario: ").strip().upper()
-                nuevo_email = input("Ingrese el nuevo email: ").strip().lower()
-                nuevo_password = input("Ingrese la nueva contraseña: ").strip()
-                nuevo_rol = input("Ingrese el nuevo rol (admin/user): ").strip().lower()
-                
-                if nuevo_nombre == "" or nuevo_usuario == "" or nuevo_email == "" or nuevo_password == "" or nuevo_rol == "":
-                    print(Fore.RED + "Error: Todos los campos son obligatorios."+Fore.RESET)
-                    time.sleep(2)
-                    os.system('cls' if os.name == 'nt' else 'clear')
-                    ver_menu(conectar)
-                else:
-                    modificar_usuario(conectar, id_usuario, nuevo_nombre, nuevo_usuario, nuevo_email, nuevo_password, nuevo_rol)
-                    time.sleep(2)
-            
-            elif opcion_usuario == '4':
-                print(Fore.YELLOW+"Eliminar usuario:\n"+Fore.RESET)
-                id_usuario = int(input("Ingrese el ID del usuario a eliminar: ")).strip()
-                if not id_usuario or id_usuario <= 0 or id_usuario == "" or id_usuario is None:
-                    print(Fore.RED + "Error: El ID del usuario es obligatorio." + Fore.RESET)
-                    time.sleep(2)
-                    os.system('cls' if os.name == 'nt' else 'clear')
-                    ver_menu(conectar)
-                else:
-                    eliminar_usuario(conectar, id_usuario)
-                    time.sleep(2)
-            else:
-                print(Fore.RED+"\nOpción no válida. Volviendo al menú principal..."+Fore.RESET)
-                time.sleep(2)
-            os.system('cls' if os.name == 'nt' else 'clear')
-            ver_menu(conectar)
-            
         elif seleccion == '7':
             print(Fore.YELLOW + "Saliendo del sistema..."+Fore.RESET)
             time.sleep(1)
@@ -215,3 +154,64 @@ def submenu(conectar=conexion(DATABASE_NAME)):
         os.system('cls' if os.name == 'nt' else 'clear')
         ver_menu(conectar)  
       
+def submenu_usuarios(conectar=conexion(DATABASE_NAME)):
+    opcion_usuario = input(Fore.YELLOW+Style.BRIGHT+"\nSeleccione una opción del menú principal: "+ Fore.RESET+Style.RESET_ALL)
+    try:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        if opcion_usuario == '1':
+            ver_usuarios(conectar)
+            input(Fore.YELLOW+"\nPresione Enter para volver al menú principal..."+Fore.RESET)
+        elif opcion_usuario == '2':
+            print(Fore.YELLOW+"Agregar nuevo usuario:\n"+Fore.RESET)
+            nombre = input("Ingrese el nombre completo: ").strip().upper()
+            usuario = input("Ingrese el nombre de usuario: ").strip().upper()
+            email = input("Ingrese el email: ").strip().lower()
+            password = input("Ingrese la contraseña: ").strip()
+            rol = input("Ingrese el rol (admin/user): ").strip().lower()
+            
+            if len(nombre)<= 0 or len(usuario)<= 0 or len(email)<= 0 or len(password)<= 0 or len(rol)<= 0:
+                print(Fore.RED + "Error: Todos los campos son obligatorios."+Fore.RESET)
+                time.sleep(2)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ver_menu(conectar)
+            else:
+                crear_usuario(conectar, nombre, usuario, email, password, rol)
+                time.sleep(2)
+        
+        elif opcion_usuario == '3':
+            print(Fore.YELLOW+"Modificar usuario:\n"+Fore.RESET)
+            id_usuario = int(input("Ingrese el ID del usuario a modificar: ")).strip()
+            nuevo_nombre = input("Ingrese el nuevo nombre completo: ").strip().upper()
+            nuevo_usuario = input("Ingrese el nuevo nombre de usuario: ").strip().upper()
+            nuevo_email = input("Ingrese el nuevo email: ").strip().lower()
+            nuevo_password = input("Ingrese la nueva contraseña: ").strip()
+            nuevo_rol = input("Ingrese el nuevo rol (admin/user): ").strip().lower()
+            
+            if len(nuevo_nombre)<= 0 or len(nuevo_usuario)<= 0 or len(nuevo_email)<= 0 or len(nuevo_password)<= 0 or len(nuevo_rol)<= 0:
+                print(Fore.RED + "Error: Todos los campos son obligatorios."+Fore.RESET)
+                time.sleep(2)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ver_menu(conectar)
+            else:
+                modificar_usuario(conectar, id_usuario, nuevo_nombre, nuevo_usuario, nuevo_email, nuevo_password, nuevo_rol)
+                time.sleep(2)
+        
+        elif opcion_usuario == '4':
+            print(Fore.YELLOW+"Eliminar usuario:\n"+Fore.RESET)
+            id_usuario = int(input("Ingrese el ID del usuario a eliminar: ")).strip()
+            if not id_usuario or id_usuario <= 0 or id_usuario == "" or id_usuario is None:
+                print(Fore.RED + "Error: El ID del usuario es obligatorio." + Fore.RESET)
+                time.sleep(2)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ver_menu(conectar)
+            else:
+                eliminar_usuario(conectar, id_usuario)
+                time.sleep(2)
+        else:
+            print(Fore.RED+"\nOpción no válida. Volviendo al menú principal..."+Fore.RESET)
+            time.sleep(2)
+        os.system('cls' if os.name == 'nt' else 'clear')
+        ver_menu(conectar)
+    except sqlite3.Error as e:
+        print(Fore.RED+f"Error durante la operación del submenú de usuarios: {e}"+Fore.RESET)
+        
