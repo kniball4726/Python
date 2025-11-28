@@ -207,6 +207,8 @@ def submenu_usuarios(conectar=conexion(DATABASE_NAME)):
             else:
                 eliminar_usuario(conectar, id_usuario)
                 time.sleep(2)
+        elif opcion_usuario == '5':
+                ver_menu(conectar)
         else:
             print(Fore.RED+"\nOpción no válida. Volviendo al menú principal..."+Fore.RESET)
             time.sleep(2)
