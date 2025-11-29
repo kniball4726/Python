@@ -7,10 +7,12 @@ init()
 def conexion(db_name):
     """
     Funcion para conectar a la base de datos SQLite
-    Args:
+   
+    Argumentos:
         db_name: Nombre de la base de datos SQLite
-        Returns:
-            Conexion a la base de datos SQLite
+        
+    Devuelve:
+        Conexion a la base de datos SQLite
             
     """
     

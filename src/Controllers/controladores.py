@@ -15,12 +15,13 @@ def ingreso_usuario(conectar, usuario, password):
     """
     Funcion para verificar el ingreso de un usuario registrado en la base de datos
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
         usuario: Nombre de usuario (ADMIN)
         password: Contraseña del usuario (admin123)
-        Returns:
-            Mensaje de exito o False si no se encuentra el usuario
+    
+    Devuelve:
+        Mensaje de exito o False si no se encuentra el usuario
             
     """
     try:
@@ -42,7 +43,7 @@ def crear_usuario(conectar, nombre, usuario, email, password, rol):
     """
     Funcion para crear un nuevo usuario en la base de datos
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
         nombre: Nombre completo del usuario
         usuario: Nombre de usuario
@@ -50,7 +51,7 @@ def crear_usuario(conectar, nombre, usuario, email, password, rol):
         password: Contraseña del usuario
         rol: Rol del usuario (admin o user)
     
-    Returns:
+    Devuelve:
         Mensaje de exito o error al crear el usuario
     
     """
@@ -71,10 +72,11 @@ def ver_usuarios(conectar=conexion(DATABASE_NAME)):
     """
     Funcion para ver los usuarios registrados en la base de datos
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
-        Returns:
-            Lista de usuarios registrados
+    
+    Devuelve:
+        Lista de usuarios registrados
             
     """
     
@@ -93,7 +95,7 @@ def modificar_usuario(conectar, id, nombre, usuario, email, password, rol):
     """
     Funcion para modificar un usuario en la base de datos
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
         id: Indice del usuario a modificar
         nombre: Nuevo nombre del usuario
@@ -102,8 +104,8 @@ def modificar_usuario(conectar, id, nombre, usuario, email, password, rol):
         password: Nueva contraseña del usuario
         rol: Nuevo rol del usuario (admin o user)
         
-        Returns:
-            Mensaje de exito o error al modificar el usuario
+    Devuelve:
+        Mensaje de exito o error al modificar el usuario
             
     """
     
@@ -125,12 +127,12 @@ def eliminar_usuario(conectar, indice):
     """
     Funcion para eliminar un usuario en la base de datos
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
         indice: Indice del usuario a eliminar
         
-        Returns:
-            Mensaje de exito o error al eliminar el usuario
+    Devuelve:
+        Mensaje de exito o error al eliminar el usuario
             
     """
     try:
@@ -151,7 +153,7 @@ def agregar_producto(conectar, nombre, descripcion, cantidad, precio, categoria)
     """
     Funcion para agregar un nuevo producto a la base de datos
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
         nombre: Nombre del producto
         descripcion: Descripcion del producto
@@ -159,8 +161,8 @@ def agregar_producto(conectar, nombre, descripcion, cantidad, precio, categoria)
         precio: Precio del producto
         categoria: Categoria del producto
         
-        Returns:
-            Mensaje de exito o error al agregar el producto
+    Devuelve:
+        Mensaje de exito o error al agregar el producto
             
     """
     try:
@@ -178,10 +180,11 @@ def ver_productos(conectar=conexion(DATABASE_NAME)):
     """
     Funcion para ver los productos registrados en la base de datos
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
-        Returns:
-            Lista de productos registrados
+    
+    Devuelve:
+        Lista de productos registrados
     
     """
     try:
@@ -203,13 +206,13 @@ def buscar_producto(conectar, tipo, busqueda):
     """
     Funcion para buscar un producto en la base de datos por id o nombre
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
         tipo: Tipo de busqueda (1: id, 2: nombre)
         busqueda: Valor de busqueda
         
-        Returns:
-            Producto encontrado o mensaje de error
+    Devuelve:
+        Producto encontrado o mensaje de error
     """
     
     try:
@@ -248,7 +251,7 @@ def modificar_producto(conectar, id, nombre, precio, categoria, descripcion):
     """
     Funcion para modificar un producto en la base de datos
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
         id: Indice del producto a modificar
         nombre: Nuevo nombre del producto
@@ -256,8 +259,8 @@ def modificar_producto(conectar, id, nombre, precio, categoria, descripcion):
         categoria: Nueva categoria del producto
         descripcion: Nueva descripcion del producto
         
-        Returns:
-            Mensaje de exito o error al modificar el producto
+    Devuelve:
+        Mensaje de exito o error al modificar el producto
             
     """
     try:
@@ -278,12 +281,12 @@ def eliminar_producto(conectar, indice):
     """
     Funcion para eliminar un producto en la base de datos
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
         indice: Indice del producto a eliminar
         
-        Returns:
-            Mensaje de exito o error al eliminar el producto
+    Devuelve:
+        Mensaje de exito o error al eliminar el producto
             
     """
     

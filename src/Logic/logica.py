@@ -14,10 +14,10 @@ def ingreso(conectar=conexion(DATABASE_NAME)):
     """
     Funcion para el ingreso de usuarios al sistema
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
     
-    Returns:
+    Devuelve:
         None
     """
 
@@ -45,10 +45,12 @@ def ingreso(conectar=conexion(DATABASE_NAME)):
 def ver_menu(conectar=conexion(DATABASE_NAME)):
     """
     Funcion para mostrar el menu principal del sistema
-    Args:
+    
+    Argumentos:
         conectar: Conexion a la base de datos
-        Returns:
-            None
+    
+    Devuelve:
+        None
     """    
     
     try:
@@ -66,10 +68,12 @@ def ver_menu(conectar=conexion(DATABASE_NAME)):
 def submenu(conectar=conexion(DATABASE_NAME)):
     """
     Funcion para manejar las opciones del menu principal
-    Args:
+    
+    Argumentos:
         conectar: Conexion a la base de datos
-        Returns:
-            None
+    
+    Devuelve:
+        None
     """
     seleccion = input(Fore.YELLOW+Style.BRIGHT+"\nSeleccione una opción del menú principal: "+ Fore.RESET+Style.RESET_ALL)
     try:
@@ -194,11 +198,11 @@ def submenu_usuarios(conectar=conexion(DATABASE_NAME)):
     """
     Funcion para manejar las opciones del submenú de usuarios
     
-    Args:
+    Argumentos:
         conectar: Conexion a la base de datos
         
-        Returns:
-            None
+    Devuelve:
+        None
     """
     
     opcion_usuario = input(Fore.YELLOW+Style.BRIGHT+"\nSeleccione una opción del menú principal: "+ Fore.RESET+Style.RESET_ALL)

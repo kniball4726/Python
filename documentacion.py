@@ -1,18 +1,26 @@
 from src.Controllers.controladores import *
 from src.Logic.logica import *
 from src.Persistencia.persistencia import * 
+from colorama import Fore, Style, Back, init
 
 # Para ver la documentacion de la funcion correspondiente cambia el nombre del parametro por el nombre de la funcion
-
+init()
 
 os.system('cls' if os.name == 'nt' else 'clear')
 
-funcion = ingreso_usuario  # Cambia 'aplicacion' por el nombre de la función que deseas documentar
 
-def documentacion(funcion):
-    print(funcion.__doc__)
+def documentacion():
+    
+    funciones = [aplicacion, conexion, datos, ingreso, agregar_producto, buscar_producto, crear_usuario, eliminar_producto, eliminar_usuario, ingreso_usuario, modificar_producto, modificar_usuario, ver_productos, ver_usuarios, ver_menu, submenu, submenu_usuarios]
+    for funcion in funciones:
+        print(Style.BRIGHT + "\nFuncion: " + Style.RESET_ALL + Fore.YELLOW + funcion.__name__ + Style.RESET_ALL+ Fore.RESET)
+        print(funcion.__doc__)
+        print(Style.BRIGHT + Back.BLUE + "------------------------" + Style.RESET_ALL)
+        
+        
+        
+documentacion()
 
-documentacion(funcion)
 
 """
 Imprime la documentacion de las funciones creadas por el desarrollador para el la aplicación

@@ -13,10 +13,12 @@ init()
 def datos():
     """
     Funcion para inicializar la base de datos y crear las tablas necesarias
-    Args:
+
+    Argumentos:
         None
-        Returns:
-            None
+
+    Devuelve:
+        None
     """
 try:
         cursor = conectar.cursor()        
@@ -125,10 +127,12 @@ except sqlite3.Error as e:
 def aplicacion():
         """
         Funcion para iniciar la aplicacion
-        Args:
+        
+        Argumentos:
             None
-            Returns:
-                None
+        
+        Devuelve:
+            None
         """
 datos()
 conexion(DATABASE_NAME)
