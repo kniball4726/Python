@@ -30,9 +30,10 @@ try:
             CREATE TABLE IF NOT EXISTS productos(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre TEXT NOT NULL,
+                descripcion TEXT,
+                cantidad INTEGER NOT NULL,
                 precio REAL NOT NULL,
                 categoria TEXT NOT NULL,
-                descripcion TEXT,
                 fecha_agregado TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 estado INTEGER NOT NULL DEFAULT 1           
                 )

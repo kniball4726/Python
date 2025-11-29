@@ -53,16 +53,18 @@ def submenu(conectar=conexion(DATABASE_NAME)):
             os.system('cls' if os.name == 'nt' else 'clear')
             print(Fore.YELLOW+"Agregar nuevo producto:\n"+Fore.RESET)
             nombre = input("Ingrese el nombre del producto: ").strip().upper()
+            descripcion = input("Ingrese la descripción del producto: ").strip()
+            cantidad = int(input("Ingrese la cantidad del producto: "))
             precio = float(input("Ingrese el precio del producto: "))
             categoria = input("Ingrese la categoría del producto: ").strip().upper()
-            descripcion = input("Ingrese la descripción del producto: ").strip()
-            if len(nombre) <= 0 or precio <= 0 or len(categoria) <= 0:
+           
+            if len(nombre) <= 0 or precio < 0.00 or len(categoria) <= 0 or cantidad < 0:
                 print(Fore.RED + "\nError: Todos los campos son obligatorios y el precio debe ser mayor a cero."+Fore.RESET)
                 time.sleep(2)
                 os.system('cls' if os.name == 'nt' else 'clear')
                 ver_menu(conectar)
             else:
-                agregar_producto(conectar, nombre, precio, categoria, descripcion)
+                agregar_producto(conectar, nombre, descripcion, cantidad, precio, categoria, )
                 time.sleep(2)
                 os.system('cls' if os.name == 'nt' else 'clear')
                 ver_menu(conectar)
@@ -76,20 +78,29 @@ def submenu(conectar=conexion(DATABASE_NAME)):
             ver_menu(conectar)
         elif seleccion == '3':
             os.system('cls' if os.name == 'nt' else 'clear')
-            print(Fore.YELLOW+"Buscar producto:\n"+Fore.RESET)
-            termino_busqueda = input("Ingrese el nombre del producto a buscar: ")
-           
-            if termino_busqueda.strip() == "":
-                print(Fore.RED + "\nError: El término de búsqueda no puede estar vacío."+Fore.RESET)
-                time.sleep(2)
-                os.system('cls' if os.name == 'nt' else 'clear')
-                ver_menu(conectar)
-            else:
-                buscar_producto(termino_busqueda)
+            print(Fore.YELLOW+"Buscar producto (Seleccione criterio):\n"+Fore.RESET)
+            menu_buscar = input("\n1.- Id\n2.- Nombre\n3.- Volver al menú principal\n\nIngrese su opción: ")
+            if menu_buscar == '1':
+                termino_busqueda = int(input(Fore.YELLOW+"\nIngrese el ID del producto a buscar: "+Fore.RESET))
+                buscar_producto(conectar, 1, termino_busqueda)
                 input(Fore.YELLOW+"\nPresione Enter para volver al menú principal..."+Fore.RESET)
                 os.system('cls' if os.name == 'nt' else 'clear')
                 ver_menu(conectar)
-        
+            elif menu_buscar == '2':
+                termino_busqueda = input(Fore.YELLOW+"\nIngrese el nombre del producto a buscar: "+Fore.RESET).strip()
+                buscar_producto(conectar, 2, termino_busqueda)
+                input(Fore.YELLOW+"\nPresione Enter para volver al menú principal..."+Fore.RESET)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ver_menu(conectar)
+            elif menu_buscar == '3':    
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ver_menu(conectar)
+            else:
+                print(Fore.RED + "\nError: Opción no válida."+Fore.RESET)
+                time.sleep(2)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                ver_menu(conectar)
+                
         elif seleccion == '4':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(Fore.YELLOW+"Modificar producto:\n"+Fore.RESET)
@@ -207,8 +218,6 @@ def submenu_usuarios(conectar=conexion(DATABASE_NAME)):
             else:
                 eliminar_usuario(conectar, id_usuario)
                 time.sleep(2)
-        elif opcion_usuario == '5':
-                ver_menu(conectar)
         else:
             print(Fore.RED+"\nOpción no válida. Volviendo al menú principal..."+Fore.RESET)
             time.sleep(2)
