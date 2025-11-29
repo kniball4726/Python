@@ -134,29 +134,4 @@ Gregory Rodriguez - Trabajo inicial, Desarrollo y documentación
 
 ## Documentación
 
-Para ver la documentación de cada función del sistema se debe abrir el archivo `documentacion.py` y en la variable `funcion =` se debe asignar como valor de la variable el nombre de la función para obtener su documentación.
-
-`ejemplo: funcion = aplicacion` , esto mostrara la documentación de la función `aplicacion`
-
-Funciones creadas para el funcionamiento del sistema: 
-
-['aplicacion',
-'conexion',
-'datos',
-'ingreso',
-'agregar_producto', 
-'buscar_producto', 
-'crear_usuario', 
-'eliminar_producto', 
-'eliminar_usuario', 
-'ingreso_usuario', 
-'modificar_producto', 
-'modificar_usuario', 
-'ver_productos', 
-'ver_usuarios',
-'ver_menu',
-'sumenu',
-'submenu_usuarios']
-
-Cada una de estas funciones estan documentadas y para acceder a su documentacion basta con escribir desde terminal `print(nombre_de_la_funcion.__doc__)`
-
+En la carpeta raiz se encuentra un archivo llamado `documentacion.py` al ejecutar este archivo por terminal se observa la documentación completa de todas las funciones utilizadas en la aplicación
