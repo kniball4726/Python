@@ -261,3 +261,4 @@ def submenu_usuarios(conectar=conexion(DATABASE_NAME)):
     except sqlite3.Error as e:
         print(Fore.RED+f"Error durante la operación del submenú de usuarios: {e}"+Fore.RESET)
        
+       
