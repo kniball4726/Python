@@ -1,94 +1,136 @@
-**Curso de Python inicial**
 
-**Proyecto integrador**
+# Sistema de gestión de productos
 
-Consigna:
-
+Entrega final de proyecto integrador del curso basico de python desde la plataforma de talento tech.
 
 
 
-**Notas del desarrollador**
+## Comenzando 🚀
 
-Autor: Gregory Rodriguez
-DNI: 95777596
+Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.
 
-Proyecto: Sistema de gestión de productos
+Prerrequisitos 📋
 
-**Pasos iniciales**
+1.- Instalar python desde la pagina oficial:
 
-    Se recomienda iniciar un entorno virtual, se puede hacer de la siguiente manera:
+- [Descarga de python](https://www.python.org/downloads/)
 
-        en la terminal desplegada se corre la siguiente linea de codigo `pip install virtualenv`
+2.- Verificar instalacion de python
 
-        al instalar usamos `virtualenv .env`
+```bash
+  python --version
+```
 
-        se crea el ambiente virtual, para activarlo se utiliza `cd .env\Scrips\activate`
+3.- Verificar la instalación del gestor de paquetes PIP
 
-        en la linea de comando inicialmente deberia salir (.env)
+```bash
+  pip --version
+```
 
-        para instalar las dependencias utilizadasa en el proyecto se usa el siguiente comando:
-        `pip install -r requirements.txt`
-        en la raiz del proyecto se debera crear una carpeta llamada .env esta ultima contendra las variables de entorno utilizadas en el proyecto
-    
-    la carpeta .gitignore contiene los archivos que no se suben al repositorio ya que no son necesarios o contienen  informacion sensible.
+4.- Instalación de editor de codigo Visual Studio Code 
 
-    generalmente se ignoran archivos como .venv que es el entorno virtual .env repositorio de variables de entorno y src/DB bases de datos, tablas y datos iniciales, los cuales se crean de manera automatica al iniciar la aaplicacion.
-    
-**Iniciar aplicación**
-
-        El usuario debe ubicar el archivo **app.py** el cual representa la funcion principal, index o main dentro de la aplicación, dentro de este archivo solo se encontraran
-    una función la cual contiene todas las funciones, la persistencia y la logica de la aplicación.
+- [Descarga de VSC](https://code.visualstudio.com/)
 
 
-**Estructura**
+## Instalación local
 
-   Inicialmente la aplicación se compone por una carpetta llamada "Logic", donde esta contenido los siguientes archivos.
-    A.- controladores.py: este archivo contiene funciones que son llamadas para realizar tareas en especifico generalmente el CRUD
-    B.- logica.py: contiene toda la lógica de negocio y realiza el llamado de las funciones contenidas en controladores.py
-    C.- persistencia.py: contiene todo lo referente a bases de datos, conexiones, creación de base de datos, de tablas e ingreso de datos iniciales,
-    a traves de este archivo al iniciar la aplicación por primera vez se crea una carpeta llama DB, en la cual estara contenido el archivo productosapp.db
-    el cual es la base de datos relacional SQL creada por defecto con tres tablas que se utilizaran para el funcionamiento correcto de la aplicación.
+Abrir visual estudio code y abrir una terminal con Ctrl+Shift+ñ
 
-**Base de datos**
+hacer un clon del repositorio
 
-    La base de datos se crea por defecto al inicar la plicación por primera vez, su nombre por defecto es productosapp.db, en la misma se crean tres tablas iniciales 
-    las cuales son:
+```bash
+  git clone https://github.com/kniball4726/Python.git
+```
 
-    - tabla 'usuarios': esta tabla esta precargada con un usuario por defecto para el ingreso inicial, este usuario es de tipo admin, teniendo todos los privilegios dentro de 
-    la aplicación, esta compuesta por los campos:
-        
-        . id
-        . nombre
-        . usuario
-        . email
-        . password
-        . rol
-        . estado
+Desde el terminal entrar en la carpeta Python
+
+```bash
+  cd python
+```
 
 
-    Para el ingreso inicial la aplicación le solicitara usuario y contraseña para lo cual sera:
-    usuario: ADMIN
-    contraseña: admin123
+Estando dentro del proyecto desde terminal se debe crear un entorno virtual
 
-    - tabla 'menu': contiene los datos del menú principal ya precargado, esta compuesta por los campos:
+```bash
+  python -m venv .venv
+```
 
-        . id
-        . nombre
-        . descripcion
-        . estado
+Para activar el entorno virtual se debe entrar en la carpeta .venv/Scrips y correr Activate de la siguiente manera 
 
-    - tabla 'productos': tabla vacia donde se guardaran todos los datos de los productos compuesta por los campos
-        
-        . id
-        . nombre
-        . precio
-        . categoria
-        . descripcion
-        . fecha_agregado
-        . estado
+```bash
+  cd .\.venv\Scripts\
+```
+```bash
+  .\activate
+```
+Volvemos a la carpeta raiz de nuestro proyecto 
 
-**Menú**
+```bash
+  cd ../..
+```
+Se deben instalar las dependencias utilizadas en el proyecto para que funciona de manera optima
 
-    Luego de ingresar con los datos iniciales precargados y reconocidos como datos validos, la aplicación muestra un menú prinicipal, el cual esta compuesto por:
+```bash
+  pip install -r requirements.txt
+```
 
-    1.- Ingresar producto: al seleccionar esta opción se despliega un formulario para agregar productos donde se debe introducir el nombre del producto, el precio del producto,
+
+
+## Variables de entorno
+
+Para poder correr este proyecto deberas agregar las siguientes variables de entorno dentro de la carpeta .env 
+
+`DATABASE_NAME`
+
+Se debe crear nuestra carpeta de variables de entorno, donde se guardaran la informacion de la base de datos
+
+en la raiz creamos un archivo llamado .env y dentro de este se debe pegar lo que esta dentro del archivo .env.dev cambiando el nombre de la base de datos, en este caso la consigna del proyecto final pide una base de datos llamada inventario.db 
+
+quedaria de la siguiente manera:
+
+`DATABASE_NAME = "src/db/inventario.db"`
+
+
+
+En la carpeta raiz Python se encuentra el archivo app.py es el archivo inicial de ingreso a nuestro sistema, se debe correr desde la consola o descargando una extencion desde el Visual estudio code  
+
+
+## Despliegue 📦
+
+Correr el sistema desde terminal, estando en la carpeta raiz python
+
+```bash
+  python app.py
+```
+
+Al correr este comando automaticamente dentro de la carpeta `src` se va a crear la carpeta `db` y dentro de ella un archivo con nombre de la base de datos que se le dio en las variables de entorno, en nuestro caso `inventario.db`, esta base de datos estara comprendida por cuatro tablas que se crean automaticamente:
+
+`usuarios`
+`menu`
+`submenu`
+`productos`
+
+La tabla `usuarios` se carga con un usuario inicial llamado `ADMIN` y password `admin123`
+La tabla `menu` y `submenu` estan precargadas con los menus del sistema
+
+para hacer un despliegue con ejecutable desde windows se debe usar:
+
+```bash
+    pyinstaller --onefile app.py
+```
+
+al correr este comando se crearan dos carpetas denominadas `build` y `dist`
+
+dentro de la carpeta `dist` encontraremos un archivo llamado `app.exe`
+
+este ejecutable de windows puede utilizarse directamente desde el escritorio de su pc otorgandole un acceso directo, se puede modificar el nombre y el icono
+## Autor
+
+Gregory Rodriguez - Trabajo inicial, Desarrollo y documentación
+- [@kniball4726](https://github.com/kniball4726)
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
