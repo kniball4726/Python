@@ -10,6 +10,14 @@ conectar = conexion(DATABASE_NAME)
 
 init()
 
+def datos():
+    """
+    Funcion para inicializar la base de datos y crear las tablas necesarias
+    Args:
+        None
+        Returns:
+            None
+    """
 try:
         cursor = conectar.cursor()        
         cursor.execute("""
@@ -115,4 +123,12 @@ except sqlite3.Error as e:
 
 
 def aplicacion():
-    conexion(DATABASE_NAME)
+        """
+        Funcion para iniciar la aplicacion
+        Args:
+            None
+            Returns:
+                None
+        """
+datos()
+conexion(DATABASE_NAME)

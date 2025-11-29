@@ -11,28 +11,46 @@ conectar = conexion(DATABASE_NAME)
 
 init()
 def ingreso(conectar=conexion(DATABASE_NAME)):
-  try:
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print(Fore.YELLOW + Style.BRIGHT+ "Bienvenido al sistema de gestión de productos\n" + Style.RESET_ALL + Fore.RESET)
-    usuario = input("Ingrese su usuario: ").strip().upper()
-    password = input("Ingrese su contraseña: ").strip()
+    """
+    Funcion para el ingreso de usuarios al sistema
     
-    if ingreso_usuario(conectar, usuario, password):
-      print(Fore.YELLOW + "Ingreso exitoso\n"+Fore.RESET)
-      print(Fore.YELLOW+"Cargando el sistema..."+Fore.RESET)
-      time.sleep(1)
-      os.system('cls' if os.name == 'nt' else 'clear')
-      ver_menu(conectar)
-    else:
-      print(Fore.RED + "Usuario o contraseña incorrectos\n"+Fore.RESET)
-      time.sleep(2)
-      os.system('cls' if os.name == 'nt' else 'clear')
-      ingreso(conectar)
-  except sqlite3.Error as e:
-    print(Fore.RED + f"Error durante el ingreso: {e}"+Fore.RESET)
+    Args:
+        conectar: Conexion a la base de datos
+    
+    Returns:
+        None
+    """
 
-  
+    try:
+      os.system('cls' if os.name == 'nt' else 'clear')
+      print(Fore.YELLOW + Style.BRIGHT+ "Bienvenido al sistema de gestión de productos\n" + Style.RESET_ALL + Fore.RESET)
+      usuario = input("Ingrese su usuario: ").strip().upper()
+      password = input("Ingrese su contraseña: ").strip()
+    
+      if ingreso_usuario(conectar, usuario, password):
+        print(Fore.YELLOW + "Ingreso exitoso\n"+Fore.RESET)
+        print(Fore.YELLOW+"Cargando el sistema..."+Fore.RESET)
+        time.sleep(1)
+        os.system('cls' if os.name == 'nt' else 'clear')
+        ver_menu(conectar)
+      else:
+        print(Fore.RED + "Usuario o contraseña incorrectos\n"+Fore.RESET)
+        time.sleep(2)
+        os.system('cls' if os.name == 'nt' else 'clear')
+        ingreso(conectar)
+    except sqlite3.Error as e:
+      print(Fore.RED + f"Error durante el ingreso: {e}"+Fore.RESET)
+    
+    
 def ver_menu(conectar=conexion(DATABASE_NAME)):
+    """
+    Funcion para mostrar el menu principal del sistema
+    Args:
+        conectar: Conexion a la base de datos
+        Returns:
+            None
+    """    
+    
     try:
         cursor = conectar.cursor()
         cursor.execute("SELECT * FROM menu WHERE estado=1")
@@ -44,12 +62,18 @@ def ver_menu(conectar=conexion(DATABASE_NAME)):
         submenu(conectar)
     except sqlite3.Error as e:
         print(Fore.RED+f"Error al obtener el menu: {e}"+Fore.RESET)
-
         
 def submenu(conectar=conexion(DATABASE_NAME)):
+    """
+    Funcion para manejar las opciones del menu principal
+    Args:
+        conectar: Conexion a la base de datos
+        Returns:
+            None
+    """
     seleccion = input(Fore.YELLOW+Style.BRIGHT+"\nSeleccione una opción del menú principal: "+ Fore.RESET+Style.RESET_ALL)
     try:
-        if seleccion == '1':
+        if seleccion == '1':    
             os.system('cls' if os.name == 'nt' else 'clear')
             print(Fore.YELLOW+"Agregar nuevo producto:\n"+Fore.RESET)
             nombre = input("Ingrese el nombre del producto: ").strip().upper()
@@ -79,7 +103,8 @@ def submenu(conectar=conexion(DATABASE_NAME)):
         elif seleccion == '3':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(Fore.YELLOW+"Buscar producto (Seleccione criterio):\n"+Fore.RESET)
-            menu_buscar = input("\n1.- Id\n2.- Nombre\n3.- Volver al menú principal\n\nIngrese su opción: ")
+            print("1.- Id\n2.- Nombre\n3.- Volver al menú principal ")
+            menu_buscar = input(Fore.YELLOW+Style.BRIGHT+"\nIngrese su opción: "+Fore.RESET+Style.RESET_ALL)
             if menu_buscar == '1':
                 termino_busqueda = int(input(Fore.YELLOW+"\nIngrese el ID del producto a buscar: "+Fore.RESET))
                 buscar_producto(conectar, 1, termino_busqueda)
@@ -104,7 +129,7 @@ def submenu(conectar=conexion(DATABASE_NAME)):
         elif seleccion == '4':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(Fore.YELLOW+"Modificar producto:\n"+Fore.RESET)
-            id_producto = int(input("Ingrese el ID del producto a modificar: ")).strip()
+            id_producto = int(input("Ingrese el ID del producto a modificar: "))
             nuevo_nombre = input("Ingrese el nuevo nombre del producto: ").strip().upper()
             nuevo_precio = float(input("Ingrese el nuevo precio del producto: "))
             nueva_categoria = input("Ingrese la nueva categoría del producto: ").strip().upper()
@@ -123,7 +148,7 @@ def submenu(conectar=conexion(DATABASE_NAME)):
         elif seleccion == '5':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(Fore.YELLOW+"Eliminar producto:\n"+Fore.RESET)
-            id_producto = int(input("Ingrese el ID del producto a eliminar: ")).strip()
+            id_producto = int(input("Ingrese el ID del producto a eliminar: "))
             if not id_producto or id_producto is None:
                 print(Fore.RED + "Error: El ID del producto es obligatorio." + Fore.RESET)
                 time.sleep(2)
@@ -164,8 +189,18 @@ def submenu(conectar=conexion(DATABASE_NAME)):
         time.sleep(2)
         os.system('cls' if os.name == 'nt' else 'clear')
         ver_menu(conectar)  
-      
+    
 def submenu_usuarios(conectar=conexion(DATABASE_NAME)):
+    """
+    Funcion para manejar las opciones del submenú de usuarios
+    
+    Args:
+        conectar: Conexion a la base de datos
+        
+        Returns:
+            None
+    """
+    
     opcion_usuario = input(Fore.YELLOW+Style.BRIGHT+"\nSeleccione una opción del menú principal: "+ Fore.RESET+Style.RESET_ALL)
     try:
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -225,4 +260,4 @@ def submenu_usuarios(conectar=conexion(DATABASE_NAME)):
         ver_menu(conectar)
     except sqlite3.Error as e:
         print(Fore.RED+f"Error durante la operación del submenú de usuarios: {e}"+Fore.RESET)
-        
+       
